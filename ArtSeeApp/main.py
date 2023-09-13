@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import subprocess  # Import the subprocess module
 
 app = FastAPI()
 
@@ -13,6 +14,10 @@ stored_url = ""
 async def store_url(data: dict):
     global stored_url
     stored_url = data['url']
+    
+    # Execute the run.sh script using subprocess
+    subprocess.run(['run.sh'], shell=True, timeout=1)
+    
     return {"message": "URL stored successfully"}
 
 @app.get('/get_url')

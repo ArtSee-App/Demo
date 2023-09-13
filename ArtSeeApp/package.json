@@ -11,15 +11,21 @@
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
     "axios": "^1.5.0",
+    "child_process": "^1.0.2",
     "deprecated-react-native-prop-types": "^4.2.1",
     "expo": "~49.0.10",
+    "expo-notifications": "~0.20.1",
     "expo-status-bar": "~1.6.0",
+    "expo-task-manager": "~11.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.4",
     "react-native-camera": "^4.2.1",
+    "react-native-canvas": "^0.1.39",
+    "react-native-fs": "^2.20.0",
     "react-native-image-crop-picker": "^0.40.0",
     "react-native-image-picker": "^7.0.0",
+    "react-native-shell": "^0.1.13",
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {

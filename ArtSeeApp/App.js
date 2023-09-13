@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native'; // Import Image component
 import axios from 'axios';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       console.error(error);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Enter URL:</Text>
@@ -24,6 +24,12 @@ function App() {
         placeholder="https://example.com"
       />
       <Button title="Send" onPress={handleSend} />
+
+      {/* Add the Image component with the source */}
+      <Image
+        source={require('./output_image.png')} // Change the source path as needed
+        style={styles.image}
+      />
     </View>
   );
 }
@@ -46,6 +52,11 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     paddingHorizontal: 10,
     marginBottom: 20,
+  },
+  image: {
+    width: 200, // Set the width of the image as needed
+    height: 200, // Set the height of the image as needed
+    marginTop: 20, // Add spacing between the button and the image
   },
 });
 

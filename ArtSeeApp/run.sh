@@ -10,7 +10,7 @@ NOTEBOOK_FILE="artsee-demo.ipynb"
 $JUPYTER_EXECUTABLE nbconvert --to script $NOTEBOOK_FILE
 
 # Run the generated Python script
-python "${NOTEBOOK_FILE%.*}.py"
+C:/Python/python.exe "e:/ArtSee/Demo/ArtSeeApp/artsee-demo.py" 
 
 # Remove the generated Python script
-rm "${NOTEBOOK_FILE%.*}.py"
+rm "artsee-demo.py"
