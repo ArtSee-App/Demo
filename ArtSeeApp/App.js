@@ -1,35 +1,66 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native'; // Import Image component
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
+import { firestore, storage, ref } from './firebaseConfig'; // Import Firebase from your configuration file
+import * as ImagePicker from 'expo-image-picker'; // Import from expo-image-picker
+import { uploadBytes } from 'firebase/storage';
+import { getStorage, getDownloadURL } from 'firebase/storage'; // Import Firebase Storage functions
 
 function App() {
   const [url, setUrl] = useState('');
+  const [imageUri, setImageUri] = useState(null);
 
-  const handleSend = async () => {
-    try {
-      const response = await axios.post('http://192.168.0.124:8000/store_url', { url });
-      console.log(response.data.message);
-    } catch (error) {
-      console.error(error);
+  const getPermissionAsync = async () => {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need media library permissions to make this work.');
+      }
     }
   };
 
+  useEffect(() => {
+    getPermissionAsync(); // Request permission when the component mounts
+    const storage = getStorage(); // Get a reference to Firebase Storage
+
+    const storageRef = ref(storage, 'test/output_image'); // Replace 'output_image' with the actual image name
+    getDownloadURL(storageRef)
+      .then((downloadURL) => {
+        // Set the URL in the state
+        setImageUri(downloadURL);
+      })
+      .catch((error) => {
+        console.error('Error fetching image from Firebase Storage:', error);
+      });
+
+  }, []);
+
+
+  const handleCameraCapture = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      // Upload the captured image to Firebase Storage
+      const response = await fetch(result.assets[0].uri);
+      const blob = await response.blob();
+      const reference = ref(
+        storage,
+        'test/input_image'
+      );
+      uploadBytes(reference, blob);
+
+    }
+  };
+
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Enter URL:</Text>
-      <TextInput
-        style={styles.input}
-        value={url}
-        onChangeText={(text) => setUrl(text)}
-        placeholder="https://example.com"
-      />
-      <Button title="Send" onPress={handleSend} />
-
-      {/* Add the Image component with the source */}
-      <Image
-        source={require('./output_image.png')} // Change the source path as needed
-        style={styles.image}
-      />
+      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+      <Button title="Take a Picture" onPress={handleCameraCapture} />
     </View>
   );
 }
@@ -54,9 +85,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    width: 200, // Set the width of the image as needed
-    height: 200, // Set the height of the image as needed
-    marginTop: 20, // Add spacing between the button and the image
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
 });
 
