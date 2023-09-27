@@ -18,14 +18,29 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "navBar": {
+        "visible": true,
+        "backgroundColor": "transparent",
+        "translucent": true
+      },
+      "package": "com.artsee.artsee"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eb1756a6-66a9-4bc8-9dca-2feb11d74c35"
+      }
     }
   }
 }

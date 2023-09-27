@@ -31,7 +31,8 @@
     "react-native-image-picker": "^7.0.0",
     "react-native-shell": "^0.1.13",
     "react-native-web": "~0.19.6",
-    "expo-image-picker": "~14.3.2"
+    "expo-image-picker": "~14.3.2",
+    "expo-camera": "~13.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
