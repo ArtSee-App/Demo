@@ -1,0 +1,13 @@
+description: Ultralytics best model trained on /content/PaintingDetection-15/data.yaml
+author: Ultralytics
+license: AGPL-3.0 https://ultralytics.com/license
+date: '2023-09-30T21:56:46.143627'
+version: 8.0.180
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 800
+- 800
+names:
+  0: Tablo
